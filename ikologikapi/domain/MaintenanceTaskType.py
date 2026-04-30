@@ -1,7 +1,7 @@
 from ikologikapi.domain.AbstractIkologikCustomerObject import AbstractIkologikCustomerObject
 
 
-class MaintenanceType(AbstractIkologikCustomerObject):
+class MaintenanceTaskTaskType(AbstractIkologikCustomerObject):
     def __init__(self, customer: str):
         super().__init__(customer)
 

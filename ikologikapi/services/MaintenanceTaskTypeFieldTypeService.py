@@ -9,20 +9,20 @@ from ikologikapi.domain.Search import Search
 from ikologikapi.services.AbstractIkologikCustomerService import AbstractIkologikCustomerService
 
 
-class MaintenanceTypeFieldTypeService(AbstractIkologikCustomerService):
+class MaintenanceTaskTypeFieldTypeService(AbstractIkologikCustomerService):
 
     def __init__(self, jwtHelper: IkologikApiCredentials):
         super().__init__(jwtHelper)
 
     # CRUD actions
 
-    def get_url(self, customer: str, maintenancetype: str) -> str:
-        return f'{self.jwtHelper.get_url()}/api/v2/customer/{customer}/maintenancetype/{maintenancetype}/fieldtype'
+    def get_url(self, customer: str, maintenancetasktype: str) -> str:
+        return f'{self.jwtHelper.get_url()}/api/v2/customer/{customer}/maintenancetasktype/{maintenancetasktype}/fieldtype'
 
-    def get_by_id(self, customer: str, maintenancetype: str, id: str) -> object:
+    def get_by_id(self, customer: str, maintenancetasktype: str, id: str) -> object:
         try:
             response = requests.get(
-                self.get_url(customer, maintenancetype) + f'/{id}',
+                self.get_url(customer, maintenancetasktype) + f'/{id}',
                 headers=self.get_headers()
             )
             if response.status_code == 200:
@@ -35,10 +35,10 @@ class MaintenanceTypeFieldTypeService(AbstractIkologikCustomerService):
         except Exception as ex:
             raise IkologikException("Error while performing get_by_id")
 
-    def list(self, customer: str, maintenancetype: str) -> list:
+    def list(self, customer: str, maintenancetasktype: str) -> list:
         try:
             response = requests.get(
-                f'{self.get_url(customer, maintenancetype)}',
+                f'{self.get_url(customer, maintenancetasktype)}',
                 headers=self.get_headers()
             )
             if response.status_code == 200:
@@ -51,11 +51,11 @@ class MaintenanceTypeFieldTypeService(AbstractIkologikCustomerService):
         except Exception as ex:
             raise IkologikException("Error while performing list")
 
-    def search(self, customer: str, maintenancetype: str, search) -> list:
+    def search(self, customer: str, maintenancetasktype: str, search) -> list:
         try:
             data = json.dumps(search, default=lambda o: o.__dict__)
             response = requests.post(
-                f'{self.get_url(customer, maintenancetype)}/search',
+                f'{self.get_url(customer, maintenancetasktype)}/search',
                 data=data,
                 headers=self.get_headers()
             )
@@ -69,11 +69,11 @@ class MaintenanceTypeFieldTypeService(AbstractIkologikCustomerService):
         except Exception as ex:
             raise IkologikException("Error while performing search")
 
-    def create(self, customer: str, maintenancetype: str, o: object) -> object:
+    def create(self, customer: str, maintenancetasktype: str, o: object) -> object:
         try:
             data = json.dumps(o, default=lambda o: o.__dict__)
             response = requests.post(
-                self.get_url(customer, maintenancetype),
+                self.get_url(customer, maintenancetasktype),
                 data=data,
                 headers=self.get_headers()
             )
@@ -87,11 +87,11 @@ class MaintenanceTypeFieldTypeService(AbstractIkologikCustomerService):
         except Exception as ex:
             raise IkologikException("Error while performing create")
 
-    def update(self, customer: str, maintenancetype: str, o: object):
+    def update(self, customer: str, maintenancetasktype: str, o: object):
         try:
             data = json.dumps(o, default=lambda o: o.__dict__)
             response = requests.put(
-                f'{self.get_url(customer, maintenancetype)}/{o.id}',
+                f'{self.get_url(customer, maintenancetasktype)}/{o.id}',
                 data=data,
                 headers=self.get_headers()
             )
@@ -105,11 +105,11 @@ class MaintenanceTypeFieldTypeService(AbstractIkologikCustomerService):
         except Exception as ex:
             raise IkologikException("Error while performing update")
 
-    def updateAll(self, customer: str, maintenancetype: str, o: list):
+    def updateAll(self, customer: str, maintenancetasktype: str, o: list):
         try:
             data = json.dumps(o, default=lambda o: o.__dict__)
             response = requests.put(
-                f'{self.get_url(customer, maintenancetype)}',
+                f'{self.get_url(customer, maintenancetasktype)}',
                 data=data,
                 headers=self.get_headers()
             )
@@ -123,10 +123,10 @@ class MaintenanceTypeFieldTypeService(AbstractIkologikCustomerService):
         except Exception as ex:
             raise IkologikException("Error while performing update")
 
-    def delete(self, customer: str, maintenancetype: str, id: str):
+    def delete(self, customer: str, maintenancetasktype: str, id: str):
         try:
             response = requests.delete(
-                f'{self.get_url(customer, maintenancetype)}/{id}',
+                f'{self.get_url(customer, maintenancetasktype)}/{id}',
                 headers=self.get_headers()
             )
             if response.status_code != 204:
