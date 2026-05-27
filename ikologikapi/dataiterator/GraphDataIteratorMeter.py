@@ -2,7 +2,8 @@ from ikologikapi.domain.GraphData import GraphData
 
 
 class GraphDataIteratorMeter:
-    def __init__(self, installation, meter_id):
+    def __init__(self, customer, installation, meter_id):
+        self.customer = customer
         self.installation = installation
         self.meter_id = meter_id
         self.start_date = None
@@ -11,6 +12,11 @@ class GraphDataIteratorMeter:
         self.data_buffer = None
         self.has_more_data = True
         self.api = None
+        self.trailing_data = False
+
+
+    def trailing_data(self, trailing_data):
+        self.trailing_data = trailing_data
 
     def has_next(self):
         self.load_more_data()
@@ -33,7 +39,8 @@ class GraphDataIteratorMeter:
     def load_more_data(self):
         converted_list = []
         if self.data_buffer is None:
-            data_list = self.api.graph.get_graph_data(self.installation, self.meter_id, 'DATA', self.start_date, self.end_date, 50, False)
+            data_list = self.api.graph.get_graph_data(self.customer, self.installation, self.meter_id, 'DATA',
+                                                      self.start_date, self.end_date, 50, False)
 
             if (data_list is None or len(data_list) == 0) or len(data_list) < 50:
                 self.has_more_data = False
@@ -45,7 +52,8 @@ class GraphDataIteratorMeter:
 
             self.data_buffer = converted_list
         elif self.has_more_data and len(self.data_buffer) == 1:
-            data_list = self.api.graph.get_graph_data(self.installation, self.meter_id, 'DATA', self.data_buffer[0].date, self.end_date, 50, False)
+            data_list = self.api.graph.get_graph_data(self.customer, self.installation, self.meter_id, 'DATA',
+                                                      self.data_buffer[0].date, self.end_date, 50, False)
 
             if (data_list is None or len(data_list) == 0) or len(data_list) < 50:
                 self.has_more_data = False

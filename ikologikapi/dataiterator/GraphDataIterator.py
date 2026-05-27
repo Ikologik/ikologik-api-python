@@ -2,7 +2,8 @@ from ikologikapi.dataiterator.GraphDataIteratorMeter import GraphDataIteratorMet
 
 
 class GraphDataIterator:
-    def __init__(self, installation, start_date, end_date, api):
+    def __init__(self, customer, installation, start_date, end_date, api):
+        self.customer = customer
         self.installation = installation
         self.start_date = start_date
         self.end_date = end_date
@@ -14,7 +15,8 @@ class GraphDataIterator:
 
     def add_meters(self, meters):
         for meter in meters:
-            self.graph_data_meter_map[meter["id"]] = GraphDataIteratorMeter(self.installation, meter["id"])
+            self.graph_data_meter_map[meter["id"]] = GraphDataIteratorMeter(self.customer, self.installation,
+                                                                            meter["id"])
 
     def init(self):
         for key, graph_data_iterator_meter in self.graph_data_meter_map.items():
@@ -32,6 +34,8 @@ class GraphDataIterator:
         for key, graph_data_iterator_meter in self.graph_data_meter_map.items():
             if graph_data_iterator_meter.has_next():
                 return True
+
+        return False
 
     def next(self):
         if not self.initialized:
@@ -52,12 +56,16 @@ class GraphDataIterator:
         self.current_date = date
 
     def get_meter_data(self, meter_id):
+        return self.get_meter_data(meter_id, False)
+
+    def get_meter_data(self, meter_id, trailing_data):
         if not self.initialized:
             return False
 
         graph_data_iterator_meter = self.graph_data_meter_map.get(meter_id)
 
-        if graph_data_iterator_meter.current_data and self.current_date == graph_data_iterator_meter.current_data.date:
+        if graph_data_iterator_meter.current_data and (
+                self.current_date == graph_data_iterator_meter.current_data.date or trailing_data is not None):
             return graph_data_iterator_meter.current_data
 
         return None

@@ -18,8 +18,8 @@ from ikologikapi.services.InstallationService import InstallationService
 from ikologikapi.services.InstallationShopProductGroupService import InstallationShopProductGroupService
 from ikologikapi.services.InstallationShopProductService import InstallationShopProductService
 from ikologikapi.services.MaintenanceTaskService import MaintenanceTaskService
-from ikologikapi.services.MaintenanceTaskTypeService import MaintenanceTypeService
-from ikologikapi.services.MaintenanceTaskTypeFieldTypeService import MaintenanceTypeFieldTypeService
+from ikologikapi.services.MaintenanceTaskTypeService import MaintenanceTaskTypeService
+from ikologikapi.services.MaintenanceTaskTypeFieldTypeService import MaintenanceTaskTypeFieldTypeService
 from ikologikapi.services.CustomerShopProductGroupService import CustomerShopProductGroupService
 from ikologikapi.services.InstallationShopProductImageService import InstallationShopProductImageService
 from ikologikapi.services.CustomerShopProductService import CustomerShopProductService
@@ -56,8 +56,8 @@ class IkologikAPI:
         self.installationShopProductImage = InstallationShopProductImageService(self.apiCredentials)
         self.installationShopProductGroup = InstallationShopProductGroupService(self.apiCredentials)
         self.maintenanceTask = MaintenanceTaskService(self.apiCredentials)
-        self.maintenanceType = MaintenanceTypeService(self.apiCredentials)
-        self.maintenanceTypeFieldType = MaintenanceTypeFieldTypeService(self.apiCredentials)
+        self.maintenanceTaskType = MaintenanceTaskTypeService(self.apiCredentials)
+        self.maintenanceTaskTypeFieldType = MaintenanceTaskTypeFieldTypeService(self.apiCredentials)
         self.report = ReportService(self.apiCredentials)
         self.reportType = ReportTypeService(self.apiCredentials)
         self.reportTypeFieldType = ReportTypeFieldTypeService(self.apiCredentials)
