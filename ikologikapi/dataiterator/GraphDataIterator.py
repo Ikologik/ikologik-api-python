@@ -13,10 +13,10 @@ class GraphDataIterator:
         self.initialized = False
         self.api = api
 
-    def add_meters(self, meters):
+    def add_meters(self, meters, trailing):
         for meter in meters:
             self.graph_data_meter_map[meter["id"]] = GraphDataIteratorMeter(self.customer, self.installation,
-                                                                            meter["id"])
+                                                                            meter["id"], trailing)
 
     def init(self):
         for key, graph_data_iterator_meter in self.graph_data_meter_map.items():
@@ -55,17 +55,14 @@ class GraphDataIterator:
 
         self.current_date = date
 
-    def get_meter_data(self, meter_id):
-        return self.get_meter_data(meter_id, False)
-
-    def get_meter_data(self, meter_id, trailing_data):
+    def get_meter_data(self, meter_id, trailing=False):
         if not self.initialized:
             return False
 
         graph_data_iterator_meter = self.graph_data_meter_map.get(meter_id)
 
         if graph_data_iterator_meter.current_data and (
-                self.current_date == graph_data_iterator_meter.current_data.date or trailing_data is not None):
+                self.current_date == graph_data_iterator_meter.current_data.date or graph_data_iterator_meter.trailing):
             return graph_data_iterator_meter.current_data
 
         return None
@@ -78,7 +75,7 @@ class GraphDataIterator:
         elif date1 is None and date2 is not None:
             return date2
         else:
-            if date1 > date2:
+            if date1 < date2:
                 return date1
             else:
                 return date2

@@ -2,7 +2,7 @@ from ikologikapi.domain.GraphData import GraphData
 
 
 class GraphDataIteratorMeter:
-    def __init__(self, customer, installation, meter_id):
+    def __init__(self, customer, installation, meter_id, trailing):
         self.customer = customer
         self.installation = installation
         self.meter_id = meter_id
@@ -12,11 +12,7 @@ class GraphDataIteratorMeter:
         self.data_buffer = None
         self.has_more_data = True
         self.api = None
-        self.trailing_data = False
-
-
-    def trailing_data(self, trailing_data):
-        self.trailing_data = trailing_data
+        self.trailing = trailing
 
     def has_next(self):
         self.load_more_data()
